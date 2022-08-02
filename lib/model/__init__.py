@@ -1,0 +1,1 @@
+from .BaseWAIFuNet import BaseWAIFuNet
