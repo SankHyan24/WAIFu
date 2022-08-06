@@ -1,6 +1,3 @@
-from OpenGL.GL import *
-from OpenGL.GLU import *
-from OpenGL.GLUT import *
 import trimesh
 import os
 
@@ -17,6 +14,9 @@ class train:
 a=train()
 a.mesh_dic.show()
 
+# from OpenGL.GL import *
+# from OpenGL.GLU import *
+# from OpenGL.GLUT import *
 # def Draw():
 #     glClear(GL_COLOR_BUFFER_BIT)
 #     glRotatef(0.5, 0, 1, 0)
