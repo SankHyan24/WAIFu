@@ -133,6 +133,7 @@ dmypy.json
 # My files
 Datasets/
 data/
+Datas/
 
 
 *.pth
