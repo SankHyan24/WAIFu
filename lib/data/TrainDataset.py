@@ -28,13 +28,31 @@ class TrainDataset(Dataset):
         for i in self.mesh_dic:
             subjects.append(i.metadata['subject'])
         return subjects
-    def __len__(self):
-        return len(self.subjects) * len(self.yaw_list) * len(self.pitch_list)
     def __len__(self)->int:
-        return len(self.mesh_dic)
+        return len(self.subjects) * len(self.yaw_list) * len(self.pitch_list)
     def show_all_meshes(self):
         for i in self.mesh_dic:
-            i.show() 
+            i.show()
+    def get_render(self, subject, num_views, yid=0, pid=0, random_sample=False):
+        '''
+        Return the render data
+        :param subject: subject name
+        :param num_views: how many views to return
+        :param view_id: the first view_id. If None, select a random one.
+        :return:
+            'img': [num_views, C, W, H] images
+            'calib': [num_views, 4, 4] calibration matrix
+            'extrinsic': [num_views, 4, 4] extrinsic matrix
+            'mask': [num_views, 1, W, H] masks
+        '''
+        pitch=self.pitch_list[pid]
+    def get_item(self, index):
+        subject = self.subjects[index % len(self.subjects)]
+        yaw = self.yaw_list[index % len(self.yaw_list)]
+        pitch = self.pitch_list[index % len(self.pitch_list)]
+        return subject, yaw, pitch
+    def __getitem__(self, index):
+        return self.get_item(index)
 
 
 
