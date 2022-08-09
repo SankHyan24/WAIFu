@@ -62,6 +62,7 @@ def save_obj(mesh_path, verts):
     file.close()
 
 def sampleSphericalDirections(n):
+    print("Sampling Spherical Directions...")
     xv = np.random.rand(n,n)
     yv = np.random.rand(n,n)
     theta = np.arccos(1-2 * xv)
@@ -76,6 +77,7 @@ def sampleSphericalDirections(n):
     return np.stack([vx, vy, vz], 1), phi, theta
 
 def getSHCoeffs(order, phi, theta):
+    print("Getting SH coeffs")
     shs = []
     for n in range(0, order+1):
         for m in range(-n,n+1):
@@ -85,7 +87,9 @@ def getSHCoeffs(order, phi, theta):
     return np.stack(shs, 1)
 
 def computePRT(mesh_path, n, order):
+    print('Loading mesh: %s' % mesh_path)
     mesh = trimesh.load(mesh_path, process=False)
+    # mesh.show()
     vectors_orig, phi, theta = sampleSphericalDirections(n)
     SH_orig = getSHCoeffs(order, phi, theta)
 
@@ -98,6 +102,9 @@ def computePRT(mesh_path, n, order):
     origins = np.repeat(origins[:,None], n, axis=1).reshape(-1,3)
     normals = np.repeat(normals[:,None], n, axis=1).reshape(-1,3)
     PRT_all = None
+    
+    print("Looping through vertices") 
+    # 卡在这里了，fuck
     for i in tqdm(range(n)):
         SH = np.repeat(SH_orig[None,(i*n):((i+1)*n)], n_v, axis=0).reshape(-1,SH_orig.shape[1])
         vectors = np.repeat(vectors_orig[None,(i*n):((i+1)*n)], n_v, axis=0).reshape(-1,3)
@@ -117,7 +124,7 @@ def computePRT(mesh_path, n, order):
             PRT_all = (PRT.reshape(-1, n, SH.shape[1]).sum(1))
 
     PRT = w * PRT_all
-
+    print("computing PRT done")
     # NOTE: trimesh sometimes break the original vertex order, but topology will not change.
     # when loading PRT in other program, use the triangle list from trimesh.
     return PRT, mesh.faces
@@ -135,7 +142,7 @@ def testPRT(dir_path, n=40):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--input', type=str, default='./Datas')
+    parser.add_argument('-i', '--input', type=str, default='Datas')
     parser.add_argument('-n', '--n_sample', type=int, default=40, help='squared root of number of sampling. the higher, the more accurate, but slower')
     args = parser.parse_args()
 
