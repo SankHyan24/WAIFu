@@ -134,7 +134,6 @@ dmypy.json
 ## Datas
 Datasets/
 data/
-Datas/bounce/
 ### except
 !Datas/model.obj
 ## training results
