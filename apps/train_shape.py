@@ -1,3 +1,11 @@
+#   _____      
+#  |     |
+#  |_____
+#        |
+#  |_____|
+#  
+#  训练PIFu geometry部分的代码，相比于原版PIFU暂时没有更改
+
 import sys
 import os
 

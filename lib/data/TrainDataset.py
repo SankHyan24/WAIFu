@@ -1,3 +1,11 @@
+#   _____      
+#  |     |
+#  |_____
+#        |
+#  |_____|
+#        
+#  训练集
+
 import os
 import trimesh
 import logging

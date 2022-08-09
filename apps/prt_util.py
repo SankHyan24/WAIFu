@@ -1,3 +1,11 @@
+#   _____      
+#  |     |
+#  |_____
+#        |
+#  |_____|
+#  PRT相关，和渲染有关的东西（但是现在跑的很慢
+# 
+
 import os
 import trimesh
 import numpy as np
@@ -62,7 +70,6 @@ def save_obj(mesh_path, verts):
     file.close()
 
 def sampleSphericalDirections(n):
-    print("Sampling Spherical Directions...")
     xv = np.random.rand(n,n)
     yv = np.random.rand(n,n)
     theta = np.arccos(1-2 * xv)
@@ -77,7 +84,6 @@ def sampleSphericalDirections(n):
     return np.stack([vx, vy, vz], 1), phi, theta
 
 def getSHCoeffs(order, phi, theta):
-    print("Getting SH coeffs")
     shs = []
     for n in range(0, order+1):
         for m in range(-n,n+1):
@@ -87,7 +93,6 @@ def getSHCoeffs(order, phi, theta):
     return np.stack(shs, 1)
 
 def computePRT(mesh_path, n, order):
-    print('Loading mesh: %s' % mesh_path)
     mesh = trimesh.load(mesh_path, process=False)
     # mesh.show()
     vectors_orig, phi, theta = sampleSphericalDirections(n)
@@ -104,11 +109,9 @@ def computePRT(mesh_path, n, order):
     PRT_all = None
     
     print("Looping through vertices") 
-    # 卡在这里了，fuck
     for i in tqdm(range(n)):
         SH = np.repeat(SH_orig[None,(i*n):((i+1)*n)], n_v, axis=0).reshape(-1,SH_orig.shape[1])
         vectors = np.repeat(vectors_orig[None,(i*n):((i+1)*n)], n_v, axis=0).reshape(-1,3)
-
         dots = (vectors * normals).sum(1)
         front = (dots > 0.0)
 

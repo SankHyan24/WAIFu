@@ -131,10 +131,15 @@ dmypy.json
 
 
 # My files
+## Datas
 Datasets/
 data/
-Datas/
-
-
+Datas/bounce/
+### except
+!Datas/model.obj
+## training results
 *.pth
 *.pkl
+## TEMPORARY FILES  
+test.py
+temp.py
