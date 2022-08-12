@@ -29,3 +29,6 @@ use this command
 pipreqs ./ --encoding=utf8 --force
 ```
 
+## PRT Issue:
+You should install the conda package "pyembree", which is not support for windows using conda.
+For windows, plz reference to [this](https://github.com/scopatz/pyembree/issues/14)
