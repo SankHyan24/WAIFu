@@ -5,13 +5,23 @@
 #  |_____|
 #  用来根据mesh生成数据的
 # test file ready for the file:./apps/render_data.py
+import sys
+import os
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 import numpy as np
 from lib.renderer.camera import Camera
 from lib.renderer.mesh import load_obj_mesh, compute_tangent, compute_normal, load_obj_mesh_mtl
+from tqdm import tqdm
 import cv2
 import argparse
 import os
-import tqdm
+import pyexr
+import math
+import random
+
 
 def make_rotate(rx, ry, rz):
     sinX = np.sin(rx)
@@ -151,7 +161,7 @@ def render_prt_ortho(out_path, folder_name, subject_name, shs, rndr, rndr_uv, im
     cam.sanity_check()
 
     # set path for obj, prt
-    mesh_file = os.path.join(folder_name, subject_name + '_100k.obj')
+    mesh_file = os.path.join(folder_name, subject_name , 'model.obj')
     if not os.path.exists(mesh_file):
         print('ERROR: obj file does not exist!!', mesh_file)
         return
@@ -163,7 +173,7 @@ def render_prt_ortho(out_path, folder_name, subject_name, shs, rndr, rndr_uv, im
     if not os.path.exists(face_prt_file):
         print('ERROR: face prt file does not exist!!!', prt_file)
         return
-    text_file = os.path.join(folder_name, 'tex', subject_name + '_dif_2k.jpg')
+    text_file = os.path.join(folder_name, 'tex', subject_name + '.jpg')
     if not os.path.exists(text_file):
         print('ERROR: dif file does not exist!!', text_file)
         return

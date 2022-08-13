@@ -119,7 +119,7 @@ def computePRT(mesh_path, n, order):
         hits = mesh.ray.intersects_any(origins + delta * normals, vectors)
         nohits = np.logical_and(front, np.logical_not(hits))
 
-        PRT = (nohits.astype(np.float) * dots)[:,None] * SH
+        PRT = (nohits.astype(np.float64) * dots)[:,None] * SH
         
         if PRT_all is not None:
             PRT_all += (PRT.reshape(-1, n, SH.shape[1]).sum(1))
@@ -145,7 +145,7 @@ def testPRT(dir_path, n=40):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--input', type=str, default='Datas')
+    parser.add_argument('-i', '--input', type=str, default='Datas/model')
     parser.add_argument('-n', '--n_sample', type=int, default=40, help='squared root of number of sampling. the higher, the more accurate, but slower')
     args = parser.parse_args()
 
