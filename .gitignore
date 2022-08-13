@@ -134,6 +134,7 @@ dmypy.json
 ## Datas
 Datasets/
 data/
+out/
 ### except
 !Datas/model.obj
 ## training results
