@@ -54,6 +54,12 @@ class PRTRender(CamRender):
         self.rot_mat_unif = glGetUniformLocation(self.program, 'RotMat')
         self.rot_matrix = np.eye(3)
 
+
+
+        # self.model_view_matrix=np.eye(4)
+        # self.projection_matrix=np.eye(4)
+        # self.model_view_matrix[:3,:3] = np.eye(3)
+
     def set_texture(self, mat_name, smplr_name, texture):
         # texture_image: H x W x 3
         width = texture.shape[1]
@@ -266,8 +272,8 @@ class PRTRender(CamRender):
 
         glUseProgram(self.program)
         glUniformMatrix4fv(self.norm_mat_unif, 1, GL_FALSE, self.normalize_matrix.transpose())
-        glUniformMatrix4fv(self.model_mat_unif, 1, GL_FALSE, self.model_view_matrix.transpose())
-        glUniformMatrix4fv(self.persp_mat_unif, 1, GL_FALSE, self.projection_matrix.transpose())
+        # glUniformMatrix4fv(self.model_mat_unif, 1, GL_FALSE, self.model_view_matrix.transpose())
+        # glUniformMatrix4fv(self.persp_mat_unif, 1, GL_FALSE, self.projection_matrix.transpose())
 
         if 'AlbedoMap' in self.render_texture_mat['all']:
             glUniform1ui(self.hasAlbedoUnif, GLuint(1))
