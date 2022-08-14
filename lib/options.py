@@ -17,7 +17,7 @@ class BaseOptions():
     def initialize(self, parser):
         # Datasets related
         g_data = parser.add_argument_group('Data')
-        g_data.add_argument('--dataroot', type=str, default='./data',
+        g_data.add_argument('--dataroot', type=str, default='./out',
                             help='path to images (data folder)')
 
         g_data.add_argument('--loadSize', type=int, default=512, help='load size of input image')
